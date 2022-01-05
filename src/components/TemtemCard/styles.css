@@ -1,0 +1,18 @@
+.temtemPortrait {
+    position: relative;
+    display: inline-block;
+}
+.temtemPortrait.background {
+    background: url(../../assets/images/temtem-portrait-background.png) no-repeat 100% / 100%;
+}
+.temtemPortrait:before {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    content: "";
+    background: url(../../assets/images/temtem-portrait-border.png) no-repeat top left;
+    background-size: 100%;
+    position: absolute;
+    z-index: 2;
+}

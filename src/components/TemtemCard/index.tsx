@@ -1,13 +1,21 @@
-import React from 'react'
-import './/styles.css'
-import { Card } from 'react-bootstrap';
+import { TemTemApiTem } from '@maael/temtem-types';
+import React from 'react';
+import TemtemImage from "../TemtemImage";
+import './/styles.css';
 
-const TemtemCard = () => {
+type Props = {
+  temtem: TemTemApiTem;
+};
+
+const TemtemCard: React.FC<Props> = ({ temtem }) => {
+  console.log(temtem);
   return (
-    <div className="temtem-card">
-      <span>aaaaaaa</span>
+    <div className="temtem-card" key={temtem?.number}>
+      <span className="temtemPortrait background">
+        <TemtemImage temtem={temtem} />
+      </span>
     </div>
   )
-}
+} 
 
 export default TemtemCard;

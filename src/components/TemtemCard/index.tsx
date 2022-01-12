@@ -9,13 +9,17 @@ type Props = {
 };
 
 const TemtemCard: React.FC<Props> = ({ temtem }) => {
-  console.log(temtem);
   return (
     <Card className="temtem-card" key={temtem?.number}>
       <Card.Header className="text-center temtem-card-header">{temtem.name}</Card.Header>
       <span className="temtem-portrait temtem-portrait-background">
         <TemtemImage temtem={temtem} />
       </span>
+      <Card.Body className="text-center">
+        {temtem.types.map((type) => (
+          <img key={type} width="50" height="50"alt={type} src={require(`../../assets/images/${type}-type-icon.png`)} />
+        ))}
+      </Card.Body>
     </Card>
   )
 } 

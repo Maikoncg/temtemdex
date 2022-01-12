@@ -1,7 +1,7 @@
 import Axios from "axios";
 
-const api = Axios.create({
+const TemtemApi = Axios.create({
   baseURL: 'https://temtem-api.mael.tech/api'
 });
 
-export default api;
+export default TemtemApi;

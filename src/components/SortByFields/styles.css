@@ -1,0 +1,14 @@
+.dropdown-types {
+  border: 1px solid #ccc !important;
+  display: inline-block;
+}
+
+.dropdown-types .dropdown-toggle {
+  width: 200px;
+  text-align: left;
+}
+
+.dropdown-types .dropdown-toggle::after {
+  float: right;
+  margin-top: 10px;
+}

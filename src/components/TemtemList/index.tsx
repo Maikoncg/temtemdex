@@ -8,6 +8,7 @@ import ".//styles.css";
 
 const TemtemList = () => {
   let [data, setData] = useState<TemTemApiTem[]>([]);
+  let [sortedType, setSortedType] = useState<TemTemType>();
 
   const getTemtemList = () => {
     TemtemApi.get(`/temtems`)
@@ -15,19 +16,13 @@ const TemtemList = () => {
       .catch((err) => console.log("Error:", err));
   }
 
-  const getSortedType = (type?: TemTemType) => {
-    if (!type) return
-    
-    data = data.map(temtemList => temtemList).filter(temtem => temtem.types.includes(type));
-    return [];
+  const getSortedType = () => {
+    return data.map(temtemList => temtemList).filter(temtem => !sortedType || temtem.types.includes(sortedType!));
   }
   
   useEffect(() => {
     getTemtemList();
-    getSortedType();
   }, []);
-
-  console.log(data);
 
   return (
     <Container fluid className="TemTemList temtem-list-container mt-4">
@@ -38,14 +33,14 @@ const TemtemList = () => {
       </Row>
       <Row className="justify-content-md-center mb-4">
         <Col md="2">
-          <SortByFields setSortedType={getSortedType} />
+          <SortByFields setSortedType={setSortedType} />
         </Col>
         <Col md="1">
           {/* <SortByFields setSortedType={getSortedType} /> */}
         </Col>
       </Row>
       <Row>
-        {(getSortedType() || data)?.map((temtem, index) => (
+        {(getSortedType())?.map((temtem, index) => (
           <Col key={index} className="d-flex justify-content-md-center mb-5" md={3}>
             <TemtemCard key={index} temtem={temtem} />
           </Col>

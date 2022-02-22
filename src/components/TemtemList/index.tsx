@@ -2,13 +2,15 @@ import { TemTemApiTem, TemTemType } from '@maael/temtem-types';
 import { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import TemtemApi from "../../services/Axios";
-import SortByFields from '../SortByFields';
+import SortByTypeField from '../SortByTypeField';
+import SortByNameField from '../SortByNameField';
 import TemtemCard from "../TemtemCard";
 import ".//styles.css";
 
 const TemtemList = () => {
   let [data, setData] = useState<TemTemApiTem[]>([]);
   let [sortedType, setSortedType] = useState<TemTemType>();
+  let [sortedName, setSortedName] = useState();
 
   const getTemtemList = () => {
     TemtemApi.get(`/temtems`)
@@ -16,8 +18,23 @@ const TemtemList = () => {
       .catch((err) => console.log("Error:", err));
   }
 
-  const getSortedType = () => {
-    return data.map(temtemList => temtemList).filter(temtem => !sortedType || temtem.types.includes(sortedType!));
+  const getSortedTemtem = () => {
+    return data.map(temtemList => temtemList).filter(temtem => {
+      console.log(sortedType);
+      const name = temtem.name.toLowerCase().includes(sortedName!);
+      const type = temtem.types.includes(sortedType!);
+      if (sortedName && sortedType && type) {
+        return name && type;
+      } else if (sortedName && sortedType && !type) {
+        return 0;
+      } else if (name && !sortedType) {
+        return name && !sortedType;
+      } else if (!sortedName && type) {
+        return !sortedName && type;
+      } else {
+        return !sortedName && !sortedType;
+      }
+    });
   }
   
   useEffect(() => {
@@ -27,20 +44,20 @@ const TemtemList = () => {
   return (
     <Container fluid className="TemTemList temtem-list-container mt-4">
       <Row className="justify-content-md-center mb-4">
-        <Col md="2">
+        <Col md="3">
           <img className="temtem-logo" alt="temtem-logo" src={require("../../assets/images/temtem-logo.png")} />
         </Col>
       </Row>
       <Row className="justify-content-md-center mb-4">
         <Col md="2">
-          <SortByFields setSortedType={setSortedType} />
+          <SortByNameField setSortedName={setSortedName} />
         </Col>
-        <Col md="1">
-          {/* <SortByFields setSortedType={getSortedType} /> */}
+        <Col md="2">
+          <SortByTypeField setSortedType={setSortedType} />
         </Col>
       </Row>
       <Row>
-        {(getSortedType())?.map((temtem, index) => (
+        {(getSortedTemtem())?.map((temtem, index) => (
           <Col key={index} className="d-flex justify-content-md-center mb-5" md={3}>
             <TemtemCard key={index} temtem={temtem} />
           </Col>

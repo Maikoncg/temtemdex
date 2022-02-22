@@ -1,6 +1,6 @@
 import { TemTemApiTem } from '@maael/temtem-types';
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import TemtemImage from "../TemtemImage";
 import './/styles.css';
 
@@ -17,7 +17,16 @@ const TemtemCard: React.FC<Props> = ({ temtem }) => {
       </span>
       <Card.Body className="text-center">
         {temtem.types.map((type) => (
-          <img key={type} width="50" height="50"alt={type} src={require(`../../assets/images/${type}-type-icon.png`)} />
+          <OverlayTrigger 
+            placement="bottom" 
+            overlay={
+              <Tooltip>
+                <span>{type}</span>
+              </Tooltip>
+            }
+          >
+            <img key={type} width="50" height="50"alt={type} src={require(`../../assets/images/${type}-type-icon.png`)} />
+          </OverlayTrigger>
         ))}
       </Card.Body>
     </Card>

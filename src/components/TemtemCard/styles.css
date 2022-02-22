@@ -1,6 +1,7 @@
 .temtem-portrait {
   position: relative;
   display: inline-block;
+  cursor: pointer;
 }
 .temtem-portrait.temtem-portrait-background {
   background: url(../../assets/images/temtem-portrait-background.png) no-repeat 100% / 100%;
@@ -15,6 +16,9 @@
   background-size: 100%;
   position: absolute;
   z-index: 2;
+}
+.temtem-portrait:hover {
+  background: url(../../assets/images/temtem-portrait-background-selected.png) no-repeat 100% / 100%;
 }
 .temtem-card {
   background-color: transparent !important;

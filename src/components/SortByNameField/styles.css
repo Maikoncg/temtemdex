@@ -1,0 +1,11 @@
+#field-name {
+  border: 1px solid #cccccc !important;
+  display: inline-block;
+  border-radius: 0 !important;
+  background-color: #f8f9fa !important;
+  height: 40px !important;
+}
+
+#field-name::-webkit-input-placeholder { 
+  color: #000000; 
+}

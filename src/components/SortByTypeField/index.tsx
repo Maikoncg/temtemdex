@@ -2,7 +2,7 @@ import { Dropdown, DropdownButton } from "react-bootstrap";
 import TemtemApi from "../../services/Axios";
 import { TemTemApiType } from "@maael/temtem-types";
 import { useEffect, useState } from "react";
-import ".//styles.css";
+import "./styles.css";
 
 type Props = {
   setSortedType: Function,
@@ -22,15 +22,21 @@ const SortByFields: React.FC<Props> = ({ setSortedType }) => {
     getTemtemTypes();
   }, []);
 
-  const [selected, setSelected] = useState('Sort by type ');
+  const [selected, setSelected] = useState('Sort by type');
   const handleSelect = (event: any) => {
-    setSelected(event);
-    setSortedType(event);
+    if (!event) {
+      setSelected('Sort by type'); 
+      setSortedType('');
+    } else {
+      setSelected(event);
+      setSortedType(event);
+    }
   };
 
   return (
     <Dropdown>
       <DropdownButton onSelect={handleSelect} className="dropdown-types" variant="light" title={`${selected}`}> 
+      <Dropdown.Item eventKey="">Sort by type</Dropdown.Item>
         {data.map((type) => (
           <Dropdown.Item key={type.name} eventKey={type.name}> 
             <img width="25" height="25" alt={type.name} src={`${api}${type.icon}`} /> {type.name} 

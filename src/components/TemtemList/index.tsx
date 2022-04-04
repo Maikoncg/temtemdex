@@ -8,9 +8,11 @@ import TemtemCard from "../TemtemCard";
 import ".//styles.css";
 
 const TemtemList = () => {
-  let [data, setData] = useState<TemTemApiTem[]>([]);
-  let [sortedType, setSortedType] = useState<TemTemType>();
-  let [sortedName, setSortedName] = useState();
+  const [data, setData] = useState<TemTemApiTem[]>([]);
+  const [sortedType, setSortedType] = useState<TemTemType>();
+  const [sortedName, setSortedName] = useState();
+  const [selectedTemtem, selectedTemtemState] = useState<TemTemApiTem>();
+
 
   const getTemtemList = () => {
     TemtemApi.get(`/temtems`)
@@ -20,9 +22,9 @@ const TemtemList = () => {
 
   const getSortedTemtem = () => {
     return data.map(temtemList => temtemList).filter(temtem => {
-      console.log(sortedType);
       const name = temtem.name.toLowerCase().includes(sortedName!);
       const type = temtem.types.includes(sortedType!);
+      
       if (sortedName && sortedType && type) {
         return name && type;
       } else if (sortedName && sortedType && !type) {
@@ -35,6 +37,14 @@ const TemtemList = () => {
         return !sortedName && !sortedType;
       }
     });
+  }
+
+  const handleModal = (temtem: TemTemApiTem) => {
+    selectedTemtemState(temtem);
+  }
+
+  const deleteTemtem = () => {
+    selectedTemtemState(undefined);
   }
   
   useEffect(() => {
@@ -58,7 +68,7 @@ const TemtemList = () => {
       </Row>
       <Row>
         {(getSortedTemtem())?.map((temtem, index) => (
-          <Col key={index} className="d-flex justify-content-md-center mb-5" md={3}>
+          <Col key={index} className="d-flex justify-content-md-center mb-5" md={3} onClick={() => handleModal(temtem)}>
             <TemtemCard key={index} temtem={temtem} />
           </Col>
         ))}

@@ -18,6 +18,7 @@ const TemtemCard: React.FC<Props> = ({ temtem }) => {
       <Card.Body className="text-center">
         {temtem.types.map((type) => (
           <OverlayTrigger 
+            key={type}
             placement="bottom" 
             overlay={
               <Tooltip>
